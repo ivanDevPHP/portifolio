@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ivanfslima | PHP Developer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.prod.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --font-main: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Add smooth scrolling to the entire page */
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;  /* Center links horizontally */
+            align-items: center;  /* Align vertically if needed */
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 1rem;
+            padding: 0.5rem 0;  /* Ensure padding is consistent */
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        /* Dynamic background for hero section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background-color: #f5f9fc; /* Light base color */
+        }
+
+        /* Gradient overlay */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(142, 68, 173, 0.1) 100%);
+            z-index: 1; /* Ensure overlay is above the shapes */
+        }
+
+        /* Hero content */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background-color: #f5f9fc;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(142, 68, 173, 0.1) 100%);
+            z-index: 1;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            text-align: left;
+            text-align: center;
+        }
+
+        .hero-photo {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+            margin-left: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        .shape-1 {
+            top: 10%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+            border-radius: 58% 42% 38% 62% / 42% 55% 45% 58%;
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            animation: morph 8s linear infinite;
+        }
+
+        .shape-2 {
+            bottom: 10%;
+            right: 10%;
+            width: 200px;
+            height: 200px;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            background: linear-gradient(45deg, #2ecc71, #3498db);
+            animation: morph 8s linear infinite alternate-reverse;
+        }
+
+        .shape-3 {
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 150px;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            background: linear-gradient(45deg, #f1c40f, #e74c3c);
+            animation: float 10s ease-in-out infinite;
+        }
+
+        @keyframes morph {
+            0% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+            50% {
+                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+            }
+            100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(-50%, -50%);
+            }
+            50% {
+                transform: translate(-55%, -45%);
+            }
+            100% {
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .hero-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links .social-icon {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            transition: color 0.3s ease;
+            padding-bottom: 8px;
+        }
+
+        .social-links .social-icon:hover {
+            color: var(--secondary-color);
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* About Section */
+        .about {
+            padding: 6rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 0.5rem auto 0;
+        }
+
+        .about-content {
+            display: flex;
+            flex-direction: column; /* Stack content vertically */
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            text-align: center; /* Center text */
+            gap: 3rem; /* Space between sections */
+        }
+
+        .about-text {
+            max-width: 700px; /* Control the width for better readability */
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center; /* Center the skill tags */
+        }
+
+        .skill-tag {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 6rem 0;
+            background-color: #f8f9fa;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-image {
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .project-content p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-tag {
+            background-color: #eee;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: #555;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: #f7f7f7; /* Soft background */
+            padding: 40px 0;
+        }
+
+        .contact .section-title {
+            margin-bottom: 0;
+        }
+
+        .contact .section-title h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #3498db; /* Blue title */
+        }
+
+        .contact-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content horizontally */
+            justify-content: center; /* Center content vertically */
+            text-align: center; /* Center text inside */
+            gap: 30px; /* Space between sections */
+        }
+
+        .contact-info {
+            max-width: 600px;
+            padding: 20px;
+            text-align: center; /* Ensure text inside is centered */
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .contact-info p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .contact-links {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .contact-links .social-icon {
+            font-size: 1.5rem;
+            color: #3498db;
+            transition: color 0.3s ease;
+        }
+
+        .contact-links .social-icon:hover {
+            color: #0077b5; /* LinkedIn blue on hover */
+        }
+
+        .contact-action {
+            display: flex;
+            justify-content: center;
+        }
+
+        .contact-action .btn {
+            padding: 15px 25px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-action .btn:hover {
+            background-color: #2980b9; /* Darker blue on hover */
+        }
+
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        /* Mobile Menu Styles */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-container {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+
+            .hero-header {
+                justify-content: center; /* Center the name and icons horizontally */
+                margin-bottom: 1rem;
+            }
+
+            .hero-photo {
+                width: 250px;
+                height: 250px;
+                margin: 0 auto 2rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .social-links {
+                justify-content: center; /* Center social icons horizontally */
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: white;
+                padding: 1rem 2rem;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                gap: 1rem;
+            }
+
+            body.dark-mode .nav-links.active {
+                background-color: #1a1a1a;
+            }
+        }
+
+        /* Dark mode toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f5f5f5;
+        }
+
+        /* Dark mode gradient */
+        body.dark-mode .hero {
+            background-color: #121a2b;
+        }
+
+        body.dark-mode .hero::before {
+            background: linear-gradient(135deg, rgba(41, 128, 185, 0.15) 0%, rgba(142, 68, 173, 0.15) 100%);
+        }
+
+        body.dark-mode .hero h1 {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .tagline{
+            color:white;
+        }
+
+        body.dark-mode nav {
+            background-color: rgba(18, 18, 18, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .nav-links a {
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .projects {
+            background-color: #1a1a1a;
+        }
+
+        body.dark-mode .project-card {
+            background-color: #242424;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .project-tag {
+            background-color: #333;
+            color: #ddd;
+        }
+
+        body.dark-mode .form-group input,
+        body.dark-mode .form-group textarea {
+            background-color: #333;
+            color: #f5f5f5;
+            border-color: #444;
+        }
+        body.dark-mode .contact{
+            background-color: #121212;
+        }
+
+        .language-select {
+            padding: 0.5rem 0.75rem;  /* Matching padding with the links */
+            border: 1px solid var(--secondary-color);
+            border-radius: 5px;
+            background-color: white;
+            color: var(--secondary-color);
+            font-size: 1rem;  /* Match font size of the links */
+            cursor: pointer;
+            margin-left: 1rem;  /* Adds space between the select and the links */
+            height: auto;
+            line-height: 1.5;  /* Adjust line-height to align with text in links */
+        }
+
+        /* Optional: Focus styles */
+        .language-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .language-select:hover {
+            border-color: #888;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!-- Navigation -->
+    <nav :class="{ scrolled: scrolled }">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo">{{ yourName }}</div>
+            <div class="nav-links" :class="{ active: mobileMenuOpen }">
+                <a href="#home" @click="scrollToSection('home')">{{ translations[currentLanguage].nav.home }}</a>
+                <a href="#about" @click="scrollToSection('about')">{{ translations[currentLanguage].nav.about }}</a>
+                <a href="#projects" @click="scrollToSection('projects')">{{ translations[currentLanguage].nav.projects }}</a>
+                <a href="#contact" @click="scrollToSection('contact')">{{ translations[currentLanguage].nav.contact }}</a>
+                <select v-model="currentLanguage" @change="changeLanguage" class="language-select">
+                    <option value="en">🇺🇸 English</option>
+                    <option value="fr">🇫🇷 Français</option>
+                    <option value="pt">🇧🇷 Português</option>
+                </select>
+            </div>
+            <button class="mobile-menu-btn" @click="toggleMenu">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+        <div class="container">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-header">
+                        <h1>{{ yourName }}</h1>
+                        <div class="social-links">
+                            <a href="https://github.com/ivandevPHP" target="_blank" title="GitHub" class="social-icon github"><i class="fab fa-github"></i></a>
+                            <a href="https://www.linkedin.com/in/ivandev/" target="_blank" title="LinkedIn" class="social-icon linkedin"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <p class="tagline">{{ tagline }}</p>
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn" @click.prevent="scrollToSection('projects')">{{ translations[currentLanguage].hero.viewWork }}</a>
+                        <a href="#contact" class="btn btn-outline" @click.prevent="scrollToSection('contact')">{{ translations[currentLanguage].hero.contactMe }}</a>
+                    </div>
+                </div>
+                <div class="hero-photo">
+                    <img src="me.jpeg" alt="Your Profile" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>{{ translations[currentLanguage].about.title }}</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>{{ translations[currentLanguage].about.whoIAm }}</h3>
+                    <p>{{ translations[currentLanguage].about.description }}</p>
+                    <p>{{ translations[currentLanguage].about.additionalInfo }}</p>
+                    <div class="skills">
+                        <span v-for="skill in skills" :key="skill" class="skill-tag">{{ skill }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <div class="section-title">
+                <h2>{{ translations[currentLanguage].projects.title }}</h2>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card" v-for="project in projects" :key="project.title">
+                    <div class="project-image">
+                        <img :src="project.image" :alt="project.title">
+                    </div>
+                    <div class="project-content">
+                        <h3>{{ project.title }}</h3>
+                        <h5>{{ project.type }}</h5>
+                        <p>{{ translations[currentLanguage].projects[project.description]  }}</p>
+                        <div class="project-tags">
+                            <span class="project-tag" v-for="tag in project.tags" :key="tag">{{ tag }}</span>
+                        </div>
+                        <a :href="project.link" target="_blank" class="btn">{{ translations[currentLanguage].projects.viewProject }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>{{ translations[currentLanguage].contact.title }}</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>{{ translations[currentLanguage].contact.letsConnect }}</h3>
+                    <p>{{ translations[currentLanguage].contact.contactText }}</p>
+                    <div class="contact-links">
+                        <a href="https://github.com/ivandevPHP" target="_blank" title="GitHub" class="social-icon">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ivandev/" target="_blank" title="LinkedIn" class="social-icon">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- Contact Button -->
+                <div class="contact-action">
+                    <a href="mailto:ivanfslima@gmail.com?subject=Contact%20Us" class="btn btn-primary">
+                        {{ translations[currentLanguage].contact.sendMessage }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; {{ new Date().getFullYear() }} {{ yourName }}. {{ translations[currentLanguage].footer.rights }}</p>
+        </div>
+    </footer>
+
+    <!-- Dark mode toggle -->
+    <div class="theme-toggle" @click="toggleDarkMode">
+        {{ darkMode ? '☀️' : '🌙' }}
+    </div>
+</div>
+
+<script>
+    const { createApp, ref } = Vue;
+
+    createApp({
+        setup() {
+            // Your personal information
+            const yourName = ref('Ivan Lima');
+            const tagline = ref('Full-Stack Developer | PHP Enthusiasts | Problem Solver');
+
+            // Your skills
+            const skills = ref([
+                'PHP', 'Symfony', 'Laravel', 'JavaScript', 'Vue.js', 'MySQL', 'Docker', 'Kubernetes', 'Git', 'AWS', 'REST APIs'
+            ]);
+
+            // Your projects
+            const projects = ref([
+                {
+                    title: 'Crucial Player Protection',
+                    type: 'Freelancer',
+                    description: 'description_1',
+                    tags: ['PHP', 'Symfony', 'Vue.js', 'MySQL', 'Docker', 'Kubernetes','AWS', 'API RESTful'],
+                    image: 'transferir.png',
+                    link: 'https://www.crucialcompliance.gi/crucial-player-protection'
+                },
+                {
+                    title: 'Survey Maker',
+                    type: 'Personal Project',
+                    description: 'description_2',
+                    tags: ['PHP', 'Laravel', 'Vue.js', 'MySQL', 'AWS', 'TailwindCSS', 'API RESTful'],
+                    image: 'transferir (1).png',
+                    link: 'http://suver-maker.s3-website.eu-north-1.amazonaws.com/'
+                },
+                {
+                    title: 'Ti Saúde',
+                    type: 'Full-Time',
+                    description: 'description_3',
+                    tags: ['PHP', 'Laravel','Vue.js','JavaScript', 'MySQL',  'API RESTful'],
+                    image: 'transferir.jpg',
+                    link: 'https://www.tisaude.com/'
+                }
+            ]);
+
+            // Form data
+            const formData = ref({
+                name: '',
+                email: '',
+                message: ''
+            });
+
+            // Navigation state
+            const scrolled = ref(false);
+            const mobileMenuOpen = ref(false);
+
+            // Dark mode state
+            const darkMode = ref(false);
+
+            // Language state
+            let currentLanguage = ref('en');
+
+            // Translations
+            const translations = ref({
+                en: {
+                    nav: {
+                        home: 'Home',
+                        about: 'About',
+                        education: 'Education',
+                        projects: 'Projects',
+                        contact: 'Contact'
+                    },
+                    hero: {
+                        viewWork: 'View My Work',
+                        contactMe: 'Contact Me'
+                    },
+                    about: {
+                        title: 'About Me',
+                        whoIAm: 'Who I Am',
+                        description: 'I am a passionate PHP developer with expertise in creating robust web applications. With several years of experience, I specialize in building scalable backend systems and elegant user interfaces.',
+                        additionalInfo: 'My approach combines clean code principles with modern development practices to deliver solutions that are both powerful and maintainable.'
+                    },
+                    education: {
+                        title: 'Education'
+                    },
+                    projects: {
+                        title: 'My Projects',
+                        viewProject: 'View Project',
+                        description_1: 'Responsible for developing new features, fixing bugs, and refactoring legacy code to enhance project functionality. I also ensure the codebase remains clean, efficient, and maintainable, promoting long-term sustainability and optimal performance',
+                        description_2: 'Survey Maker is a scalable and efficient survey management solution built with Laravel and Vue.js. It offers a robust platform for creating and managing surveys, securely storing responses, and handling user interactions with ease.',
+                        description_3: 'I developed a RESTful API using Laravel and implemented user interfaces with Vue.js. I actively contributed to the refactor that transitioned the project from Blade to Vue.js and also played a key role in upgrading the project from PHP 5 to PHP 7',
+                    },
+                    contact: {
+                        title: 'Get In Touch',
+                        letsConnect: 'Let\'s Connect',
+                        contactText: 'I\'m always open to discussing new projects, creative ideas or opportunities to be part of your vision.',
+                        name: 'Name',
+                        email: 'Email',
+                        message: 'Message',
+                        sendMessage: 'Send Message'
+                    },
+                    footer: {
+                        rights: 'All Rights Reserved.'
+                    }
+                },
+                fr: {
+                    nav: {
+                        home: 'Accueil',
+                        about: 'À Propos',
+                        education: 'Éducation',
+                        projects: 'Projets',
+                        contact: 'Contact'
+                    },
+                    hero: {
+                        viewWork: 'Voir Mon Travail',
+                        contactMe: 'Contactez-Moi'
+                    },
+                    about: {
+                        title: 'À Propos de Moi',
+                        whoIAm: 'Qui Je Suis',
+                        description: 'Je suis un développeur PHP passionné, spécialisé dans la création d\'applications web robustes. Avec plusieurs années d\'expérience, je me spécialise dans la construction de systèmes backend évolutifs et d\'interfaces utilisateur élégantes.',
+                        additionalInfo: 'Mon approche combine les principes du code propre avec les pratiques de développement modernes pour livrer des solutions à la fois puissantes et maintenables.'
+                    },
+                    education: {
+                        title: 'Éducation'
+                    },
+                    projects: {
+                        title: 'Mes Projets',
+                        viewProject: 'Voir le Projet',
+                        description_1: 'Responsable du développement de nouvelles fonctionnalités, de la correction des bugs et de la refactorisation du code hérité pour améliorer la fonctionnalité du projet. Je veille également à ce que la base de code reste propre, efficace et maintenable, favorisant ainsi la durabilité à long terme et des performances optimales.',
+                        description_2: 'Survey Maker est une solution de gestion de sondages évolutive et efficace, construite avec Laravel et Vue.js. Elle offre une plateforme robuste pour créer et gérer des sondages, stocker les réponses de manière sécurisée et gérer facilement les interactions avec les utilisateurs.',
+                        description_3: 'J\'ai développé une API RESTful en utilisant Laravel et mis en œuvre des interfaces utilisateur avec Vue.js. J\'ai activement contribué à la refactorisation qui a permis de passer de Blade à Vue.js et j\'ai également joué un rôle clé dans la mise à jour du projet de PHP 5 à PHP 7.',
+                    },
+                    contact: {
+                        title: 'Contactez-Moi',
+                        letsConnect: 'Restons Connectés',
+                        contactText: 'Je suis toujours ouvert à discuter de nouveaux projets, d\'idées créatives ou d\'opportunités pour faire partie de votre vision.',
+                        name: 'Nom',
+                        email: 'Email',
+                        message: 'Message',
+                        sendMessage: 'Envoyer le Message'
+                    },
+                    footer: {
+                        rights: 'Tous Droits Réservés.'
+                    }
+                },
+                pt: {
+                    nav: {
+                        home: 'Início',
+                        about: 'Sobre',
+                        education: 'Educação',
+                        projects: 'Projetos',
+                        contact: 'Contato'
+                    },
+                    hero: {
+                        viewWork: 'Ver Meu Trabalho',
+                        contactMe: 'Contate-Me'
+                    },
+                    about: {
+                        title: 'Sobre Mim',
+                        whoIAm: 'Quem Sou Eu',
+                        description: 'Sou um desenvolvedor PHP apaixonado, com experiência na criação de aplicações web robustas. Com vários anos de experiência, especializo-me na construção de sistemas backend escaláveis e interfaces de usuário elegantes.',
+                        additionalInfo: 'Minha abordagem combina os princípios de código limpo com as práticas de desenvolvimento modernas para entregar soluções que são poderosas e sustentáveis.'
+                    },
+                    education: {
+                        title: 'Educação'
+                    },
+                    projects: {
+                        title: 'Meus Projetos',
+                        viewProject: 'Ver Projeto',
+                        description_1: 'Responsável pelo desenvolvimento de novas funcionalidades, correção de bugs e refatoração de código legado para melhorar a funcionalidade do projeto. Também garanto que o código permaneça limpo, eficiente e de fácil manutenção, promovendo sustentabilidade a longo prazo e desempenho ideal.',
+                        description_2: 'O Survey Maker é uma solução escalável e eficiente para gerenciamento de pesquisas, construída com Laravel e Vue.js. Ele oferece uma plataforma robusta para criar e gerenciar pesquisas, armazenar respostas de forma segura e lidar com interações de usuários com facilidade.',
+                        description_3: 'Desenvolvi uma API RESTful utilizando Laravel e implementei interfaces de usuário com Vue.js. Participei ativamente da refatoração que fez a transição do projeto de Blade para Vue.js e também desempenhei um papel fundamental na atualização do projeto de PHP 5 para PHP 7.',
+                    },
+                    contact: {
+                        title: 'Entre em Contato',
+                        letsConnect: 'Vamos Conectar',
+                        contactText: 'Estou sempre aberto a discutir novos projetos, ideias criativas ou oportunidades para fazer parte da sua visão.',
+                        name: 'Nome',
+                        email: 'Email',
+                        message: 'Mensagem',
+                        sendMessage: 'Enviar Mensagem'
+                    },
+                    footer: {
+                        rights: 'Todos os Direitos Reservados.'
+                    }
+                }
+            });
+
+            const changeLanguage = () => {
+                // Update the tagline and other dynamic text
+                tagline.value = translations.value[currentLanguage.value].hero.tagline;
+            };
+
+            // Check if user prefers dark mode
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                darkMode.value = true;
+                document.body.classList.add('dark-mode');
+            }
+
+            // Watch for scroll to update nav style
+            window.addEventListener('scroll', () => {
+                scrolled.value = window.scrollY > 50;
+            });
+
+            // Form submission
+            const submitForm = () => {
+                // Here you would typically send the form data to your PHP backend
+                console.log('Form submitted:', formData.value);
+                alert('Thank you for your message! I will get back to you soon.');
+                formData.value = { name: '', email: '', message: '' };
+            };
+
+            // Toggle mobile menu
+            const toggleMenu = () => {
+                mobileMenuOpen.value = !mobileMenuOpen.value;
+            };
+
+            // Close mobile menu
+            const closeMenu = () => {
+                mobileMenuOpen.value = false;
+            };
+
+            // Smooth scroll to section
+            const scrollToSection = (sectionId) => {
+                // Close the mobile menu if it's open
+                mobileMenuOpen.value = false;
+
+                // Get the section element
+                const element = document.getElementById(sectionId);
+
+                if (element) {
+                    // Calculate position to scroll to, with adjustment for fixed header
+                    const headerHeight = document.querySelector('nav').offsetHeight;
+                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - headerHeight;
+
+                    // Smooth scroll to the section
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            };
+
+            // Toggle dark mode
+            const toggleDarkMode = () => {
+                darkMode.value = !darkMode.value;
+                if (darkMode.value) {
+                    document.body.classList.add('dark-mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                }
+            };
+
+            return {
+                yourName,
+                tagline,
+                skills,
+                projects,
+                formData,
+                scrolled,
+                mobileMenuOpen,
+                darkMode,
+                submitForm,
+                toggleMenu,
+                closeMenu,
+                toggleDarkMode,
+                scrollToSection,
+                currentLanguage,
+                translations
+
+            };
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>
